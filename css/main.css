@@ -1,0 +1,179 @@
+/*main */
+body,html{
+	font-family:Arial, Helvetica, sans-serif,宋体; 
+	color:#53556A; 
+}
+
+.main {
+	width:100%;
+	position:relative;
+	border:0;
+}
+
+/*1.html 2.html 普通对话框戴耳机*/
+	.overbox h1{
+		font-size:2em;
+		margin:0px;
+		line-height:1em;
+	}
+	.overbox{
+		font-size:3em;
+		line-height:1.7em;
+		position:absolute;
+		top:0px;
+	}
+	
+	.overbox .earbox{
+		position:absolute;
+	}
+	
+	.overbox_in{
+		padding:1.2em;
+	}
+	
+	.img_ear{
+		width:100%;
+	}
+
+	/* 控制背景色 - 红*/
+	.red{
+		background:url(../img/bg_r.png);
+		color:#FFFFFF;
+	}
+	
+	.red .overbox_in  h1{
+		color:#fbd59e;
+	}
+	
+	/* 控制背景色 - 黑*/
+	.black{
+		background:url(../img/bg_b.png);
+		color:#cacaca;
+	}
+	
+	.black .overbox_in  h1{
+		color:red;
+	}
+	
+	/* 控制在低端 */
+	.botton{
+		top:300px; /* TODO: JS 绝对定位*/
+	}
+
+/*0.html */
+	/* 日期栏 */
+	
+	.indexdate{
+		color:red;
+		padding:0;
+		margin:0;
+	}
+	
+	.indexdate{
+		font-size:15em;
+	}
+	
+	.indexdate .s{
+		font-size:0.33em;
+	}
+	
+	.indexdate img{
+		width:0.6em;
+	}
+	
+	
+	/*对话框*/
+	.indexbox{
+		position:absolute;
+		top:300px;
+	}
+
+	.indexbox_in{
+		padding:1.2em;
+	}
+
+
+/*放大*/
+.act_out{
+	-webkit-transform: scale(1);
+	-webkit-transition-timing-function: ease-out;
+	-webkit-transition-duration: 300ms; 
+}
+
+.act_out_f{
+	-webkit-transform: scale(0);
+	-webkit-transition-timing-function: ease-out;
+	-webkit-transition-duration: 0ms; 
+}
+
+/*---------------*/
+/*左移*/
+/*---------------*/
+@-webkit-keyframes left-slidein {
+	from { -webkit-transform: translate3d(100%, 0, 0); }
+	to { -webkit-transform: translate3d(0, 0, 0); }
+}
+
+.act_left{
+	-webkit-animation-name: left-slidein;
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-fill-mode:forwards;
+}
+
+.act_init{
+	display:none;
+}
+
+/*---------------*/
+/*右移*/
+/*---------------*/
+@-webkit-keyframes right-slidein {
+	from { -webkit-transform: translate3d(-100%, 0, 0); }
+	to { -webkit-transform: translate3d(0, 0, 0); }
+}
+.act_right{
+	-webkit-animation-name: right-slidein;
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-fill-mode:forwards;
+}
+
+
+/*---------------*/
+/*下落，渐渐现*/
+/*---------------*/
+@-webkit-keyframes zoom_out {
+	from { -webkit-transform:scale(3); filter:alpha(opacity=50);-moz-opacity:0.5;-khtml-opacity: 0.5; opacity: 0.5;}
+	to { -webkit-transform:scale(1); filter:alpha(opacity=100);-moz-opacity:1;-khtml-opacity: 1; opacity: 1;}
+}
+.act_zoom_out{
+	-webkit-animation-name: zoom_out;
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-fill-mode:forwards;
+}
+
+
+/*---------------*/
+/*翻页，边角动画*/
+/*---------------*/
+.jiao{
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            z-index: 999;
+            width: 116px;
+            height: 114px;
+            background-image: url(../images/123.png);
+            -webkit-animation: jiao 1s linear forwards;
+        }
+        @-webkit-keyframes jiao{
+            0%   {transform: scale(0,0);top:-57px;right:-58px;}
+            25%  {transform: scale(0.25,0.25);top:-43px;right:-43px;}
+            50%  {transform: scale(0.50,0.50);top:-29px;right:-29px;}
+            75%  {transform: scale(0.75,0.75);top:-14.5px;right:-14.5px;}
+            100% {transform: scale(1,1);top:0px;right:0px;}
+        }
+        .noJiao{
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }

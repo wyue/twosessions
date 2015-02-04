@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>两会特刊</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+    <script type="text/javascript" language="javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" language="javascript" src="js/format.js"></script>
+    <script type="text/javascript" src="islider.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #iSlider-content {
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+        #iSlider-hidden {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        article {
+            margin-top: 0px;
+            padding: 10px;
+            padding-top: 25px;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+
+            border-image: url('images/border.png');
+            border-image-slice: 20;
+            border-image-width: 10px;
+            border-image-repeat: repeat;
+
+            color:rgb(220,220,220);
+            /*text-shadow: blue 0 1px 0;            文字添加蓝色阴影背景*/
+            background-repeat: no-repeat;
+            background-size:cover;
+            background-position:center;
+            background-clip:border-box;
+            background-color: green;
+
+            box-sizing:border-box;
+            -moz-box-sizing:border-box; /* Firefox */
+            -webkit-box-sizing:border-box; /* Safari */
+        }
+        #iSlider-wrapper {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+        .iSlider-show {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: #333;
+        }
+        #iSlider-show ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #iSlider-show li {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-box-pack: center;
+            -webkit-box-align: center;
+            list-style: none;
+        }
+        #iSlider-show img{
+            max-width: 96%;
+        }
+        
+
+    </style>
+</head>
+<body>
+
+<div id="iSlider-content">
+    <div id="iSlider-show" class="iSlider-show"></div>
+</div>
+<script type="text/javascript">
+    var domList =[{
+        "height": "100%",
+        "width": "100%",
+            "content": 
+        "<article style='background-image: url(images/1.jpg)'><div id='jiao'></div>"+
+        "<div class=\"main\">   <div class=\"indexdate actbox\" id=\"date0\" style=\"text-align:center;\">      <table border=\"0\" width=\"40%\" align=\"center\">       <tr>          <td width=\"60%\">02</td>           <td width=\"40%\" rowspan=\"2\"><img src=\"img/index_r.png\" width=\"150%\"/></td>        </tr>       <tr>          <td class=\"s\">3月6日</td>         </tr>     </table>    </div>    <div class=\"indexbox actbox\" id=\"indexbox0\">        <div class=\"indexbox_in\">            <img src=\"img/index_title.png\" width=100%/>        </div>    </div></div>"   //这里写网页 html
+        +"</article>"
+    },
+    {
+        "height": "100%",
+        "width": "100%",
+        "content": 
+        "<article style='background-image: url(images/1.jpg)'>"+
+        "<div class=\"main\">    <div class=\"overbox actbox red\" id=\"box1\">       <div class=\"overbox_in\">            <h1>2014全国两会的50个定格</h1>            李克强作的第一份政府工作报告刚表决通过，2887票赞成、15票反对、5票弃权，3人未按表决器。这个结果让参与报告起草的国务院研究室司长向东很吃惊。他说，这是近年来赞成票最高、反对票最少的一次。          <div class=\"earbox\">                <img src=\"img/btn/ear1.png\" class=\"img_ear\"/>          </div>      </div>    </div></div>"   //这里写网页 html
+        +"</article>"
+    },
+    {
+        "height": "100%",
+        "width": "100%",
+        "content": 
+        "<article style='background-image: url(images/1.jpg)'>"+
+        "<div class=\"main\">    <div class=\"overbox actbox black botton\" id=\"box2\">      <div class=\"overbox_in\">            <h1>这是第二页</h1>            李克强作的第一份政府工作报告刚表决通过，2887票赞成、15票反对、5票弃权，3人未按表决器。这个结果让参与报告起草的国务院研究室司长向东很吃惊。他说，这是近年来赞成票最高、反对票最少的一次。          <div class=\"earbox\">                <img src=\"img/btn/ear1.png\" class=\"img_ear\"/>          </div>       </div>    </div></div>"
+        +"</article>"
+    },
+    {"height":"100%","width":"100%","content":"<div style='color: green'>这是第二页</div><a href='http://www.baidu.com'>aaaaaaa</a>"},{"height":"100%","width":"100%","content":"<article style=\"background-image: url(images/2.jpg)\">\n<h1>国外摄影师</h1>\n<h2>也很辛苦</h2>\n<p>在美国，摄影师都是自己版摄影机。</p>\n</article>"},{"height":"100%","width":"100%","content":"<article style=\"background-image: url(images/3.jpg)\">\n<h1>警卫力量</h1>\n<h2>中国的哨兵</h2>\n<p>两会期间安防很重要。</p>\n</article>"},{"height":"100%","width":"100%","content":"<article style=\"background-image: url(images/4.jpg)\">\n<h1>结束</h1>\n<h2>两会进行中</h2>\n<p>两会仍在继续。</p>\n</article>"},{"height":"100%","width":"100%","content":"<article style='background-image: url(images/5.jpg)'>\n<h1>首页</h1>\n<h2>特刊</h2>\n<p>两会开始了。</p>\n</article>"},{"height":"100%","width":"100%","content":"<article style='background-image: url(images/6.jpg)'>\n<h1>首页</h1>\n<h2>特刊</h2>\n<p>两会开始了。</p>\n</article>"},{"height":"100%","width":"100%","content":"<article style='background-image: url(images/11.jpg)'>\n<h1>首页</h1>\n<h2>特刊</h2>\n<p>两会开始了。</p>\n</article>"},{"height":"100%","width":"100%","content":"<article style='background-image: url(images/8.jpg)'>\n<h1>首页</h1>\n<h2>特刊</h2>\n<p>两会开始了。</p>\n</article>"},{"height":"100%","width":"100%","content":"<article style='background-image: url(images/9.jpg)'>\n<h1>首页</h1>\n<h2>特刊</h2>\n<p>两会开始了。</p>\n</article>"}];
+
+    var url = window.location.href;       //获取当前页码，如果跳转链接，便于返回当前页
+    var length = url.length - 1;
+    var locate = url[length];
+    if(locate == 'l'|| locate == 'o'||locate == '0'){
+        var index = 0;
+    }else{
+        var index = parseInt(locate);
+    }
+    
+    var islider = new iSlider({          //初始化iSlider，调用动画
+        data: domList,
+        dom: document.getElementById("iSlider-show"),
+        type:'dom',
+        isVertical:false,
+        initIndex:index,
+        animateType:'card',
+        onslide:function(){  //手指滑动屏幕 
+        },
+        onslidestart:function(){   //手指点击屏幕
+            noJiao();
+        },
+        onslideend:function(){       //手指离开屏幕
+            if(islider.slideIndex == 0){
+                var a = setTimeout("jiao()",200);
+            }
+        },
+        onslidechange:function(){      //划过一屏
+            history.pushState(null,'New Page', '#index='+islider.slideIndex);
+            init_act();
+            var a = setTimeout("event_"+islider.slideIndex+"();",1); 
+        }
+    });
+    var a = setTimeout("jiao()",2000); 
+    init_act();
+    var a = setTimeout("event_"+islider.slideIndex+"();",1); 
+    
+</script>
+</body>
+</html>
