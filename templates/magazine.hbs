@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>两会特刊</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+    <script type="text/javascript" language="javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" language="javascript" src="js/islider.js"></script>
+    <script type="text/javascript" language="javascript" src="js/idangerous.swiper.js"></script>
+    <script type="text/javascript" language="javascript" src="js/simple-audio.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/anim.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <link rel="stylesheet" type="text/css" href="css/idangerous.swiper.css">
+    <script type="text/javascript">
+    (function(){
+        var phoneWidth = parseInt(window.screen.width),
+            phoneScale = phoneWidth/640,
+            ua = navigator.userAgent;
+
+        if (/Android (\d+\.\d+)/.test(ua)){
+            var version = parseFloat(RegExp.$1);
+            // andriod 2.3
+            if(version > 2.3){
+                document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+            // andriod 2.3以上
+            }else{
+                document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+            }
+            // 其他系统
+        } else {
+            document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+        }
+    })();
+    </script>
+
+
+    <style type="text/css">
+        #iSlider-content {
+            position: absolute;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+        #iSlider-hidden {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        article {
+            margin-top: 0px;
+            padding: 10px;
+            padding-top: 25px;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+
+            color:rgb(220,220,220);
+            /*text-shadow: blue 0 1px 0;            文字添加蓝色阴影背景*/
+            background-repeat: no-repeat;
+            background-size:cover;
+            background-position:center;
+            background-clip:border-box;
+
+        }
+        #iSlider-wrapper {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+        .iSlider-show {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: #333;
+        }
+        #iSlider-show ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #iSlider-show li {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-box-pack: center;
+            -webkit-box-align: center;
+            list-style: none;
+        }
+        #iSlider-show img{
+            max-width: 96%;
+        }
+        
+    </style>
+</head>
+<body>
+<!-- <div class="loading">
+    <div class="load_top"></div>
+    <div class="load_main">
+        <div class="val"><span></span></div>
+        <div class="text">正在努力为您加载中<span></span></div>
+    </div>
+    <div class="load_bottom">中国网新闻中心 移动产品部联合出品</div>
+</div> -->
+<div id="iSlider-content">
+    <div id="iSlider-show" class="iSlider-show"></div>
+</div>
+<script type="text/javascript">
+    var audio=new LittleAudio();    //初始化全局audio对象
+
+    function playmovie(){
+        console.log('play movie');
+        var movieurl=$(".video_btn").attr('movieurl');
+        console.log(movieurl);
+        window.location=movieurl;
+    }
+
+    var domList ={{{articles}}};
+    var url = window.location.href;       //获取当前页码，如果跳转链接，便于返回当前页
+    var index = parseInt(url.substring(url.lastIndexOf("=")+1));
+
+    function getNowArticle(){
+        var array = [];
+        var articles = [];
+        $( "article" ).each(function( index, article ) {
+            articles.push(article);
+            array.push(parseInt($(article).parent().css('z-index')));
+        });
+        if(array[2] == undefined){
+            array[2] = 0;
+        }
+
+        if(array[0] >= array[1] && array[0] >= array[2]){
+            // console.log('000000000000000000');
+            $("article").find( ".anim" ).addClass('anim-init');
+            $("article").find( ".anim" ).removeAttr('style');
+            $(articles[0]).find(".anim").each(function(){
+                var name = $(this).attr("anim-name");
+                var duration = $(this).attr("anim-duration");
+                var delay = $(this).attr("anim-delay");
+                var mode = $(this).attr("anim-mode");
+                $(this).css('-webkit-animation',name+' '+duration+' '+delay+' '+mode);
+            });
+            $(articles[0]).find(".anim").removeClass('anim-init');
+            // $(articles[0]).find(".music_btn").each(function(){
+            //         // console.log('find music_btn in 111111');
+            //         $(document).ready(function(){
+            //             var playButton=$(articles[0]).find('.audioButton');
+            //             var musicurl=$(articles[0]).find(".audioButton").attr('musicurl');
+            //             // console.log(musicurl);
+            //             audio.init({
+            //                 element:playButton,
+            //                 url:musicurl,
+            //                 callback:function(play){
+            //                     if(play){
+            //                         $(playButton).text('暂停');
+            //                     }else{
+            //                         $(playButton).text('播放');
+            //                     }
+            //                 }
+            //             });
+            //             playButton.on('click',function(){
+            //                 // console.log('11111play');
+            //                 audio.playOrPause();
+            //             }); 
+            //         });
+            //     })
+        }else{
+            if(array[2] >= array[1]){
+                // console.log('2222222222222');
+                $("article").find('.anim').addClass('anim-init');
+                $("article").find('.anim').removeAttr('style');
+                $(articles[2]).find(".anim").each(function(){
+                    var name = $(this).attr("anim-name");
+                    var duration = $(this).attr("anim-duration");
+                    var delay = $(this).attr("anim-delay");
+                    var mode = $(this).attr("anim-mode");
+                    $(this).css('-webkit-animation',name+' '+duration+' '+delay+' '+mode);
+                });
+                $(articles[2]).find(".anim").removeClass('anim-init');
+                // $(articles[2]).find(".music_btn").each(function(){
+                //     // console.log('find music_btn in 111111');
+                //     $(document).ready(function(){
+                //         var playButton=$(articles[2]).find('.audioButton');
+                //         var musicurl=$(articles[2]).find(".audioButton").attr('musicurl');
+                //         // console.log(musicurl);
+                //         audio.init({
+                //             element:playButton,
+                //             url:musicurl,
+                //             callback:function(play){
+                //                 if(play){
+                //                     $(playButton).text('暂停');
+                //                 }else{
+                //                     $(playButton).text('播放');
+                //                 }
+                //             }
+                //         });
+                //         playButton.on('click',function(){
+                //             // console.log('11111play');
+                //             audio.playOrPause();
+                //         }); 
+                //     });
+                // })
+            }else{
+                // console.log('111111111111111');
+                $("article").find('.anim').addClass('anim-init');
+                $("article").find('.anim').removeAttr('style');
+                $(articles[1]).find(".anim").each(function(){
+                    var name = $(this).attr("anim-name");
+                    var duration = $(this).attr("anim-duration");
+                    var delay = $(this).attr("anim-delay");
+                    var mode = $(this).attr("anim-mode");
+                    $(this).css('-webkit-animation',name+' '+duration+' '+delay+' '+mode);
+                });
+                $(articles[1]).find(".anim").removeClass('anim-init');
+
+                // $(articles[1]).find(".music_btn").each(function(){
+                //     // console.log('find music_btn in 111111');
+                //     $(document).ready(function(){
+                //         var playButton=$(articles[1]).find('.audioButton');
+                //         var musicurl=$(articles[1]).find(".audioButton").attr('musicurl');
+                //         // console.log(musicurl);
+                //         audio.init({
+                //             element:playButton,
+                //             url:musicurl,
+                //             callback:function(play){
+                //                 if(play){
+                //                     $(playButton).text('暂停');
+                //                 }else{
+                //                     $(playButton).text('播放');
+                //                 }
+                //             }
+                //         });
+                //         // playButton.on('click',function(){
+                //         //     console.log('11111play');
+                //         //     audio.playOrPause();
+                //         // }); 
+                //     });
+                // })
+
+            }
+        }
+    }
+
+    var mySwiper
+    var mySwiper_ver
+    var changed=false;
+    var islider = new iSlider({          //初始化iSlider，调用动画
+        data: domList,
+        dom: document.getElementById("iSlider-show"),
+        type:'dom',
+        isVertical:false,
+        initIndex:index,
+        animateType:'card',
+        onslide:function(){           //手指滑动屏幕 
+        },
+        onslidestart:function(){      //手指点击屏幕
+        },
+        onslideend:function(){         //手指离开屏幕
+        },
+        onslidechange:function(i){      //划过一屏
+            history.pushState(null,'New Page', '#index='+islider.slideIndex);
+            changed=true;
+            var windowHight = $(window).height()+20;
+            $("#shadow").css('height',windowHight+'px');
+            // var t = setTimeout("getNowArticle();",100);
+            // playState = false;
+            // var btn = $('.music_botton');
+            // btn.click();
+            // $('.music_botton').removeClass('music_botton');
+            // audio.clear();
+
+            $(".swiper-slide").removeAttr("style");
+            if(document.getElementById('swipe_hor')){
+                mySwiper = new Swiper('#swipe_hor',{
+                    slidesPerView: 3
+                })
+                bindSwiper()
+                $(".swiper-slide").removeAttr("style");
+                $(".swiper-wrapper").removeAttr("style");
+            }else{
+                if(mySwiper){
+                    mySwiper.destroy()
+                    mySwiper = null
+                }
+                $(".swiper-slide").removeAttr("style");
+                $(".swiper-wrapper").removeAttr("style");
+            }
+            if(document.getElementById('swipe_ver')){
+                mySwiper_ver = new Swiper('#swipe_ver',{
+                    slidesPerView: 4,
+                    mode: 'vertical'
+                })
+                bindSwiper()
+                // $(".swiper-slide").removeAttr("style");
+                $(".swiper-wrapper").removeAttr("style");
+            }else{
+                if(mySwiper_ver){
+                    mySwiper_ver.destroy()
+                    mySwiper_ver = null
+                }
+                // $(".swiper-slide").removeAttr("style");
+                $(".swiper-wrapper").removeAttr("style");
+            }
+        }
+    });
+
+    if(document.getElementById('swipe_hor')){
+        mySwiper = new Swiper('#swipe_hor',{
+            slidesPerView: 3
+        })
+        bindSwiper()
+        $(".swiper-slide").removeAttr("style");
+        $(".swiper-wrapper").removeAttr("style");
+    }else{
+        if(mySwiper){
+            mySwiper.destroy()
+            mySwiper = null
+        }
+        $(".swiper-slide").removeAttr("style");
+        $(".swiper-wrapper").removeAttr("style");
+    }
+    if(document.getElementById('swipe_ver')){
+        mySwiper_ver = new Swiper('#swipe_ver',{
+            slidesPerView: 4,
+            mode: 'vertical'
+        })
+        bindSwiper()
+        // $(".swiper-slide").removeAttr("style");
+        $(".swiper-wrapper").removeAttr("style");
+    }else{
+        if(mySwiper_ver){
+            mySwiper_ver.destroy()
+            mySwiper_ver = null
+        }
+        // $(".swiper-slide").removeAttr("style");
+        $(".swiper-wrapper").removeAttr("style");
+    }
+    var counter = 0;
+
+    $(document).ready(function(){
+        $('#iSlider-content').on('webkitTransitionEnd',function(event){
+            if (changed){
+                var t = setTimeout("getNowArticle();",200);
+                console.log('transition end');
+                changed=false;
+            }
+        })
+    });
+
+    getNowArticle();
+
+    function bindSwiper(){
+        $('.swiper-container').on('touchstart',function(e){
+            e.stopPropagation()
+        })
+        $('.swiper-container').on('touchmove',function(e){
+            e.stopPropagation()
+        })
+        $('.swiper-container').on('touchend',function(e){
+            e.stopPropagation()
+        })
+    }
+
+    //阻止微信上下拖动
+    $(document).on('touchmove',function(e){
+        e.preventDefault()
+    })
+    // //图片预加载
+    // var loaderimages={
+    //     allImages:[],
+    //     init:function(){
+    //         this.preload()
+    //     },
+    //     preload:function(){
+    //         var e=this;
+    //         e.preloadAssets(e.allImages,"",
+    //         function(t){
+    //             var n=Math.floor(t.completedCount/t.totalCount*100);
+    //             e.setPreloaderPercent(n)},
+    //         function(t){
+    //             e.loaderComplete()
+    //         })
+    //     },
+    //     preloadAssets:function(e,t,n,r){
+    //         var i=new PxLoader;
+    //         for(var s=0;s<e.length;s++){
+    //             i.add(new PxLoaderImage(e[s]))
+    //         };
+    //         i.addProgressListener(n),
+    //         i.addCompletionListener(r),
+    //         i.start()
+    //     },
+    //     setPreloaderPercent:function(e){
+    //         $(".load_main .val span").css({width:e+"%"})
+    //     },
+    //     loaderComplete:function(){
+    //         //隐藏loading
+    //         setTimeout(function(){
+    //             $('.loading').css('display','none')
+    //         },500)
+    //     }
+    // }
+    // for(var i=1;i<=11;i++){
+    //     loaderimages.allImages.push('images/'+i+'.jpg')
+    // }
+    // loaderimages.init()
+    
+    var windowHight = $(window).height()+20;
+    $("#shadow").css('height',windowHight+'px');
+
+    // var playState = false;
+    // function playmusic(){
+    //     $(document).ready(function(){
+    //         var initButton=$('.music_btn');
+    //         $('.music_btn').addClass('music_botton');
+    //         var playButton=$('.audioButton');
+    //         var musicurl=$(".audioButton").attr('musicurl');
+    //         console.log(musicurl);
+    //         if(playState == false){
+    //             playState = true;
+    //             audio.init({
+    //                 element:playButton,
+    //                 url:musicurl,
+    //                 callback:function(play){
+    //                     if(play){
+    //                         $(playButton).text('暂停');
+    //                     }else{
+    //                         $(playButton).text('播放');
+    //                     }
+    //                 }
+    //             });
+    //             console.log('初始化完毕');
+    //         }else{
+    //             audio.playOrPause();
+    //         }
+    //     });
+    // }
+</script>
+</body>
+</html>
